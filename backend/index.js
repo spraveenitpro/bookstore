@@ -1,4 +1,4 @@
-import express, { request } from "express";
+import express from "express";
 import { PORT, mongoDBURL } from "./config.js";
 import mongoose from "mongoose";
 import { Book } from "./models/bookModel.js";
@@ -12,51 +12,6 @@ app.get("/", (request, response) => {
 	return response.status(234).send("Welcome to MERN tutorial");
 })
 
-app.post("/books", async (request, response) => {
-	try {
-		if (!request.body.title ||
-			!request.body.author ||
-			!request.body.publishYear) {
-			return response.status(400).send({
-				message: "Send all required fields!!!"
-			});
-		}
-		const newBook = {
-			title: request.body.title,
-			author: request.body.author,
-			publishYear: request.body.publishYear
-		}
-		const book = new Book(newBook);
-		return response.status(201).send(book);
-
-	} catch (error) {
-		console.log(error);
-		response.status(500).send({ message: error.message });
-	}
+app.listen(PORT, () => {
+	console.log(`Server is running on port ${PORT}`);
 })
-
-// Create route to get all books
-
-app.get("/books", async (request, response) => {
-	try {
-		const books = await Book.find({});
-		console.log(books);
-		return response.status(200).json(books);
-
-	} catch (error) {
-		console.log(error.message);
-		response.status(500).send({ message: error.message });
-	}
-});
-
-mongoose
-	.connect(mongoDBURL)
-	.then(() => {
-		console.log("Connected to MongoDB");
-		app.listen(PORT, () => {
-			console.log(`Server listening on port ${PORT}`);
-		});
-	})
-	.catch((error) => {
-		console.log(error);
-	})
