@@ -4,7 +4,7 @@ The modern library management system leverages the best practices of digital tec
 
 ## Typical Features of a MERN Stack Library Application
 
-### User Authentication
+### User Authentication.
 
 Users can create personal accounts, through which they can manage their preferences, borrow history, and other personal details. Secure authentication protocols are implemented to safeguard user data.
 
